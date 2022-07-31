@@ -1,0 +1,394 @@
+﻿<Window x:Class="leaguestat01.MatchDetailsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:leaguestat01"
+        xmlns:matchV5="clr-namespace:Camille.RiotGames.MatchV5;assembly=Camille.RiotGames"
+
+        mc:Ignorable="d"
+        Title="MatchDetailsWindow" Height="550" Width="800">
+    
+    <Grid Name="MDetailsMainGrid" DataContext="{Binding MatchGlobal}" >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10px"></ColumnDefinition>
+            <ColumnDefinition Width="0.2*"></ColumnDefinition>
+            <ColumnDefinition Width="20px"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10px"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="10px"></RowDefinition>
+        </Grid.RowDefinitions>
+        
+        
+        <ListBox Name="ParticipantListBox" Grid.Row="1" Grid.RowSpan="5" Grid.Column="1" SelectionChanged="RadioButtonList_OnSelectionChanged">
+            <ListBox.ItemTemplate>
+                <DataTemplate DataType="matchV5:Participant" >
+                    <Label Content="{Binding Path = SummonerName}" />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        
+        <ListBox Name="CompareListbox" Grid.Row="6" Grid.RowSpan="5" Grid.Column="1" Margin="0 10" SelectionChanged="CompareListbox_OnSelectionChanged">
+            <ListBox.ItemTemplate>
+                <DataTemplate DataType="matchV5:Participant" >
+                    <Label Content="{Binding Path = SummonerName}" />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        
+        <TabControl Grid.Row="1" Grid.Column="3" Grid.RowSpan="10" Name="MainTabControl">
+            <TabItem Header="Match" >
+                <Grid Name="MatchGrid">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.4*"></ColumnDefinition>
+                        <ColumnDefinition Width="0.3*"></ColumnDefinition>
+                        <ColumnDefinition Width="0.3*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" HorizontalAlignment="Center" Margin="10 0">
+                        <Label Height="30px">Ranked games</Label>
+                        <Label Height="30px">Kills :</Label>
+                        <Label Height="30px">Assists :</Label>
+                        <Label Height="30px">Deaths :</Label>
+                        <Label Height="30px">KDA :</Label>
+                        <Label Height="30px">Champion :</Label>
+                        <Label Height="30px">Position :</Label>
+                        <Label Height="30px">Champion level :</Label>
+                        <Label Height="30px">Gold earned :</Label>
+                        <Label Height="30px">Damage dealt :</Label>
+                        <Label Height="30px">Role :</Label>
+                        <Label Height="30px">Wards placed :</Label>
+                        <Label Height="30px">Team won :</Label>
+                    </StackPanel>
+                    <StackPanel  Grid.Column="1" Name="MatchTabStackPanel" HorizontalAlignment="Left" >
+                        <Label Height="30px" Content="{Binding SummonerName}"></Label>
+                        <Label Height="30px" Content="{Binding Kills}"></Label>
+                        <Label Height="30px" Content="{Binding Assists}"></Label>
+                        <Label  Height="30px" Content="{Binding Path = Deaths}" ></Label>
+                        <Label Name="ParticipantKDA" Height="30px" ></Label>
+                        <Label Height="30px" Content="{Binding ChampionName}"></Label>
+                        <Label Height="30px" Content="{Binding TeamPosition}"></Label>
+                        <Label Height="30px" Content="{Binding ChampLevel}"></Label>
+                        <Label Height="30px" Content="{Binding GoldEarned}"></Label>
+                        <Label Height="30px" Content="{Binding TotalDamageDealt}"></Label>
+                        <Label Height="30px" Content="{Binding Role}"></Label>
+                        <Label Height="30px" Content="{Binding WardsPlaced}"></Label>
+                        <Label Height="30px" Content="{Binding Win}"></Label>
+                    </StackPanel>
+                    <StackPanel  Grid.Column="2" Name="MatchTabStackPanelCompare"  HorizontalAlignment="Left" >
+                        <Label Height="30px" Content="{Binding SummonerName}"></Label>
+                        <Label Height="30px" Content="{Binding Kills}"></Label>
+                        <Label Height="30px" Content="{Binding Assists}"></Label>
+                        <Label  Height="30px" Content="{Binding Path = Deaths}" ></Label>
+                        <Label Name="ParticipantKDACompare" Height="30px" ></Label>
+                        <Label Height="30px" Content="{Binding ChampionName}"></Label>
+                        <Label Height="30px" Content="{Binding TeamPosition}"></Label>
+                        <Label Height="30px" Content="{Binding ChampLevel}"></Label>
+                        <Label Height="30px" Content="{Binding GoldEarned}"></Label>
+                        <Label Height="30px" Content="{Binding TotalDamageDealt}"></Label>
+                        <Label Height="30px" Content="{Binding Role}"></Label>
+                        <Label Height="30px" Content="{Binding WardsPlaced}"></Label>
+                        <Label Height="30px" Content="{Binding Win}"></Label>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Damage">
+                <Grid Name="DamageGrid">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" HorizontalAlignment="Right"  Margin="10 0">
+                        <Label Height="30px" >Ranked games</Label>
+                        <Label Height="30px">Total damage dealt :</Label>
+                        <Label Height="30px">Total damage dealt to champions :</Label>
+                        <Label Height="30px">Total damage taken :</Label>
+                        <Label Height="30px">Physical damage dealt :</Label>
+                        <Label Height="30px">Physical damage dealt to champions :</Label>
+                        <Label Height="30px">Physical damage taken :</Label>
+                        <Label Height="30px">Magic damage dealt :</Label>
+                        <Label Height="30px">Magic damage dealt to champions :</Label>
+                        <Label Height="30px">Magic damage taken :</Label>
+                        <Label Height="30px">True damage dealt :</Label>
+                        <Label Height="30px">True damage dealt to champions :</Label>
+                        <Label Height="30px">True damage taken :</Label>
+                    </StackPanel>
+                    <StackPanel  Grid.Column="1" Name="DamageTabStackPanel" >
+                        <Label Height="30px" Content="{Binding SummonerName}"></Label>
+                        <Label Height="30px" Content="{Binding TotalDamageDealt}"></Label>
+                        <Label Height="30px" Content="{Binding TotalDamageDealtToChampions}"></Label>
+                        <Label Height="30px" Content="{Binding TotalDamageTaken}" ></Label>
+                        <Label Height="30px" Content="{Binding PhysicalDamageDealt}" ></Label>
+                        <Label Height="30px" Content="{Binding PhysicalDamageDealtToChampions}"></Label>
+                        <Label Height="30px" Content="{Binding PhysicalDamageTaken}"></Label>
+                        <Label Height="30px" Content="{Binding MagicDamageDealt}"></Label>
+                        <Label Height="30px" Content="{Binding MagicDamageDealtToChampions}"></Label>
+                        <Label Height="30px" Content="{Binding MagicDamageTaken}"></Label>
+                        <Label Height="30px" Content="{Binding TrueDamageDealt}"></Label>
+                        <Label Height="30px" Content="{Binding TrueDamageDealtToChampions}"></Label>
+                        <Label Height="30px" Content="{Binding TrueDamageTaken}"></Label>
+                    </StackPanel>
+                    <StackPanel  Grid.Column="2" Name="DamageTabStackPanelCompare" >
+                        <Label Height="30px" Content="{Binding SummonerName}"></Label>
+                        <Label Height="30px" Content="{Binding TotalDamageDealt}"></Label>
+                        <Label Height="30px" Content="{Binding TotalDamageDealtToChampions}"></Label>
+                        <Label Height="30px" Content="{Binding TotalDamageTaken}" ></Label>
+                        <Label Height="30px" Content="{Binding PhysicalDamageDealt}" ></Label>
+                        <Label Height="30px" Content="{Binding PhysicalDamageDealtToChampions}"></Label>
+                        <Label Height="30px" Content="{Binding PhysicalDamageTaken}"></Label>
+                        <Label Height="30px" Content="{Binding MagicDamageDealt}"></Label>
+                        <Label Height="30px" Content="{Binding MagicDamageDealtToChampions}"></Label>
+                        <Label Height="30px" Content="{Binding MagicDamageTaken}"></Label>
+                        <Label Height="30px" Content="{Binding TrueDamageDealt}"></Label>
+                        <Label Height="30px" Content="{Binding TrueDamageDealtToChampions}"></Label>
+                        <Label Height="30px" Content="{Binding TrueDamageTaken}"></Label>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Kills">
+                <Grid Name="KillGrid">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" HorizontalAlignment="Center">
+                        <Label Height="30px">Ranked games</Label>
+                        <Label Height="30px">Kills :</Label>
+                        <Label Height="30px">Double kills :</Label>
+                        <Label Height="30px">Triple kills :</Label>
+                        <Label Height="30px">Quadra kills :</Label>
+                        <Label Height="30px">Penta kills :</Label>
+                        <Label Height="30px">First blood kill :</Label>
+                        <Label Height="30px">Largest killing spree :</Label>
+                        <Label Height="30px">Largest multi kill :</Label>
+                        
+                    </StackPanel>
+                    <StackPanel  Grid.Column="1" Name="KillsTabStackPanel" >
+                        <Label Height="30px" Content="{Binding SummonerName}"></Label>
+                        <Label Height="30px" Content="{Binding Kills}"></Label>
+                        <Label Height="30px" Content="{Binding DoubleKills}"></Label>
+                        <Label Height="30px" Content="{Binding  TripleKills}" ></Label>
+                        <Label Height="30px" Content="{Binding QuadraKills}" ></Label>
+                        <Label Height="30px" Content="{Binding PentaKills}"></Label>
+                        <Label Height="30px" Content="{Binding FirstBloodKill}"></Label>
+                        <Label Height="30px" Content="{Binding LargestKillingSpree}"></Label>
+                        <Label Height="30px" Content="{Binding LargestMultiKill}"></Label>
+                    </StackPanel>
+                    <StackPanel  Grid.Column="2" Name="KillsTabStackPanelCompare" >
+                        <Label Height="30px" Content="{Binding SummonerName}"></Label>
+                        <Label Height="30px" Content="{Binding Kills}"></Label>
+                        <Label Height="30px" Content="{Binding DoubleKills}"></Label>
+                        <Label Height="30px" Content="{Binding  TripleKills}" ></Label>
+                        <Label Height="30px" Content="{Binding QuadraKills}" ></Label>
+                        <Label Height="30px" Content="{Binding PentaKills}"></Label>
+                        <Label Height="30px" Content="{Binding FirstBloodKill}"></Label>
+                        <Label Height="30px" Content="{Binding LargestKillingSpree}"></Label>
+                        <Label Height="30px" Content="{Binding LargestMultiKill}"></Label>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Items">
+                <Grid Name="ItemGrid">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" HorizontalAlignment="Center">
+                        <Label Height="30px">Ranked games</Label>
+                        <Label Height="30px">Item 1 :</Label>
+                        <Label Height="30px">Item 2 :</Label>
+                        <Label Height="30px">Item 3 :</Label>
+                        <Label Height="30px">Item 4 :</Label>
+                        <Label Height="30px">Item 5 :</Label>
+                        <Label Height="30px">Item 6 :</Label>
+                        <Label Height="30px">Item 7 :</Label>
+                        <Label Height="30px">Items purchased :</Label>
+                        <Label Height="30px">Consumables purchased :</Label>
+                    </StackPanel>
+                    <StackPanel  Grid.Column="1" Name="ItemsTabStackPanel" >
+                        <Label Height="30px" Content="{Binding SummonerName}"></Label>
+                        <Label Height="30px" Content="{Binding Item0}"></Label>
+                        <Label Height="30px" Content="{Binding Item1}"></Label>
+                        <Label Height="30px" Content="{Binding Item2}" ></Label>
+                        <Label Height="30px" Content="{Binding Item3}" ></Label>
+                        <Label Height="30px" Content="{Binding Item4}"></Label>
+                        <Label Height="30px" Content="{Binding Item5}"></Label>
+                        <Label Height="30px" Content="{Binding Item6}"></Label>
+                        <Label Height="30px" Content="{Binding ItemsPurchased}"></Label>
+                        <Label Height="30px" Content="{Binding ConsumablesPurchased}"></Label>
+                    </StackPanel>
+                    <StackPanel  Grid.Column="2" Name="ItemsTabStackPanelCompare" >
+                        <Label Height="30px" Content="{Binding SummonerName}"></Label>
+                        <Label Height="30px" Content="{Binding Item0}"></Label>
+                        <Label Height="30px" Content="{Binding Item1}"></Label>
+                        <Label Height="30px" Content="{Binding Item2}" ></Label>
+                        <Label Height="30px" Content="{Binding Item3}" ></Label>
+                        <Label Height="30px" Content="{Binding Item4}"></Label>
+                        <Label Height="30px" Content="{Binding Item5}"></Label>
+                        <Label Height="30px" Content="{Binding Item6}"></Label>
+                        <Label Height="30px" Content="{Binding ItemsPurchased}"></Label>
+                        <Label Height="30px" Content="{Binding ConsumablesPurchased}"></Label>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Spells">
+                <Grid Name="SpellGrid">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" HorizontalAlignment="Center">
+                        <Label Height="30px">Ranked games</Label>
+                        <Label Height="30px">Spell 1 cast count :</Label>
+                        <Label Height="30px">Spell 2 cast count :</Label>
+                        <Label Height="30px">Spell 3 cast count :</Label>
+                        <Label Height="30px">Spell 4 cast count :</Label>
+                        <Label Height="30px">Summoner spell 1 :</Label>
+                        <Label Height="30px">Summoner spell 1 cast count :</Label>
+                        <Label Height="30px">Summoner spell 2 :</Label>
+                        <Label Height="30px">Summoner spell 2 cast count :</Label>
+                    </StackPanel>
+                    <StackPanel  Grid.Column="1" Name="SpellTabStackPanel" >
+                        <Label Height="30px" Content="{Binding SummonerName}"></Label>
+                        <Label Height="30px" Content="{Binding Spell1Casts}"></Label>
+                        <Label Height="30px" Content="{Binding Spell2Casts}"></Label>
+                        <Label Height="30px" Content="{Binding Spell3Casts}" ></Label>
+                        <Label Height="30px" Content="{Binding Spell4Casts}" ></Label>
+                        <Label Height="30px" Content="{Binding Summoner1Id}"></Label>
+                        <Label Height="30px" Content="{Binding Summoner1Casts}"></Label>
+                        <Label Height="30px" Content="{Binding Summoner2Id}"></Label>
+                        <Label Height="30px" Content="{Binding Summoner2Casts}"></Label>
+                    </StackPanel>
+                    <StackPanel  Grid.Column="2" Name="SpellTabStackPanelCompare" >
+                        <Label Height="30px" Content="{Binding SummonerName}"></Label>
+                        <Label Height="30px" Content="{Binding Spell1Casts}"></Label>
+                        <Label Height="30px" Content="{Binding Spell2Casts}"></Label>
+                        <Label Height="30px" Content="{Binding Spell3Casts}" ></Label>
+                        <Label Height="30px" Content="{Binding Spell4Casts}" ></Label>
+                        <Label Height="30px" Content="{Binding Summoner1Id}"></Label>
+                        <Label Height="30px" Content="{Binding Summoner1Casts}"></Label>
+                        <Label Height="30px" Content="{Binding Summoner2Id}"></Label>
+                        <Label Height="30px" Content="{Binding Summoner2Casts}"></Label>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Objectives">
+                <Grid Name="ObjectiveGrid">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" HorizontalAlignment="Center">
+                        <Label Height="30px">Ranked games</Label>
+                        <Label Height="30px">Baron kills :</Label>
+                        <Label Height="30px">Dragon kills :</Label>
+                        <Label Height="30px">Damage dealt to objectives :</Label>
+                        <Label Height="30px">Damage dealt to turrets :</Label>
+                        <Label Height="30px">Damage dealt to buildings :</Label>
+                        <Label Height="30px">Inhibitors destroyed :</Label>
+                        <Label Height="30px">Neutral minions killed :</Label>
+                        <Label Height="30px">Objectives stolen :</Label>
+                        <Label Height="30px">Time crowd controlling others :</Label>
+                        <Label Height="30px">Time spent dead :</Label>
+                        <Label Height="30px">Turrets taken down :</Label>
+                    </StackPanel>
+                    <StackPanel  Grid.Column="1" Name="ObjectivesTabStackPanel" >
+                        <Label Height="30px" Content="{Binding SummonerName}"></Label>
+                        <Label Height="30px" Content="{Binding BaronKills}"></Label>
+                        <Label Height="30px" Content="{Binding DragonKills}"></Label>
+                        <Label Height="30px" Content="{Binding  DamageDealtToObjectives}" ></Label>
+                        <Label Height="30px" Content="{Binding DamageDealtToTurrets}" ></Label>
+                        <Label Height="30px" Content="{Binding DamageDealtToBuildings}"></Label>
+                        <Label Height="30px" Content="{Binding InhibitorKills}"></Label>
+                        <Label Height="30px" Content="{Binding NeutralMinionsKilled}"></Label>
+                        <Label Height="30px" Content="{Binding ObjectivesStolen}"></Label>
+                        <Label Height="30px" Name="ParticipantTotalTimeCCDealt" ></Label>
+                        <Label Height="30px" Name="ParticipantTotalTimeSpentDead"  ></Label>
+                        <Label Height="30px" Content="{Binding TurretTakedowns}"></Label>
+                    </StackPanel>
+                    <StackPanel  Grid.Column="2" Name="ObjectivesTabStackPanelCompare" >
+                        <Label Height="30px" Content="{Binding SummonerName}"></Label>
+                        <Label Height="30px" Content="{Binding BaronKills}"></Label>
+                        <Label Height="30px" Content="{Binding DragonKills}"></Label>
+                        <Label Height="30px" Content="{Binding  DamageDealtToObjectives}" ></Label>
+                        <Label Height="30px" Content="{Binding DamageDealtToTurrets}" ></Label>
+                        <Label Height="30px" Content="{Binding DamageDealtToBuildings}"></Label>
+                        <Label Height="30px" Content="{Binding InhibitorKills}"></Label>
+                        <Label Height="30px" Content="{Binding NeutralMinionsKilled}"></Label>
+                        <Label Height="30px" Content="{Binding ObjectivesStolen}"></Label>
+                        <Label Height="30px" Name="ParticipantTotalTimeCCDealtCompare" ></Label>
+                        <Label Height="30px" Name="ParticipantTotalTimeSpentDeadCompare"  ></Label>
+                        <Label Height="30px" Content="{Binding TurretTakedowns}"></Label>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Misc">
+                <Grid Name="MiscGrid">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" HorizontalAlignment="Center">
+                        <Label Height="30px">Ranked games</Label>
+                        <Label Height="30px">Wards killed :</Label>
+                        <Label Height="30px">Wards placed :</Label>
+                        <Label Height="30px">Detector wards placed :</Label>
+                        <Label Height="30px">Vision score :</Label>
+                        <Label Height="30px">Sight wards bought :</Label>
+                        <Label Height="30px">Vision wards bought :</Label>
+                        <Label Height="30px">Lane played :</Label>
+                        <Label Height="30px">Gold earned :</Label>
+                        <Label Height="30px">Gold spent :</Label>
+                        <Label Height="30px">Longest time alive :</Label>
+                        <Label Height="30px">Largest critical strike :</Label>
+                    </StackPanel>
+                    <StackPanel  Grid.Column="1" Name="MiscTabStackPanel" >
+                        <Label Height="30px" Content="{Binding SummonerName}"></Label>
+                        <Label Height="30px" Content="{Binding WardsKilled}"></Label>
+                        <Label Height="30px" Content="{Binding WardsPlaced}"></Label>
+                        <Label Height="30px" Content="{Binding DetectorWardsPlaced}"></Label>
+                        <Label Height="30px" Content="{Binding VisionScore}" ></Label>
+                        <Label Height="30px" Content="{Binding SightWardsBoughtInGame}"></Label>
+                        <Label Height="30px" Content="{Binding VisionWardsBoughtInGame}"></Label>
+                        <Label Height="30px" Content="{Binding Lane}"></Label>
+                        <Label Height="30px" Content="{Binding GoldEarned}"></Label>
+                        <Label Height="30px" Content="{Binding GoldSpent}"></Label>
+                        <Label Name="ParticipantTimeSpentLiving" Height="30px" ></Label>
+                        <Label Height="30px" Content="{Binding LargestCriticalStrike}"></Label>
+                    </StackPanel>
+                    <StackPanel  Grid.Column="2" Name="MiscTabStackPanelCompare" >
+                        <Label Height="30px" Content="{Binding SummonerName}"></Label>
+                        <Label Height="30px" Content="{Binding WardsKilled}"></Label>
+                        <Label Height="30px" Content="{Binding WardsPlaced}"></Label>
+                        <Label Height="30px" Content="{Binding DetectorWardsPlaced}"></Label>
+                        <Label Height="30px" Content="{Binding VisionScore}" ></Label>
+                        <Label Height="30px" Content="{Binding SightWardsBoughtInGame}"></Label>
+                        <Label Height="30px" Content="{Binding VisionWardsBoughtInGame}"></Label>
+                        <Label Height="30px" Content="{Binding Lane}"></Label>
+                        <Label Height="30px" Content="{Binding GoldEarned}"></Label>
+                        <Label Height="30px" Content="{Binding GoldSpent}"></Label>
+                        <Label Name="ParticipantTimeSpentLivingCompare" Height="30px" ></Label>
+                        <Label Height="30px" Content="{Binding LargestCriticalStrike}"></Label>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

@@ -1,0 +1,135 @@
+﻿<Window x:Class="leaguestat01.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:s="clr-namespace:System.Collections;assembly=mscorlib"
+        xmlns:p="clr-namespace:System;assembly=mscorlib"
+        xmlns:local="clr-namespace:leaguestat01"
+        mc:Ignorable="d"
+        Title="League Statistic" Height="450" Width="650" >
+    <Grid Name="RootGrid">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.1*"></ColumnDefinition>
+            <ColumnDefinition Width="0.1*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="0.7*"></ColumnDefinition>
+            <ColumnDefinition Width="0.1*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.1*"></RowDefinition>
+            <RowDefinition Height="0.2*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="0.1*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Label Grid.Row="1" Grid.Column="4" HorizontalAlignment="Center">Account list</Label>
+        <Label Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Center">Statistics</Label>
+        <ListBox Name="AccountListbox" Grid.Column="4" Grid.Row="2" SelectionMode="Single"
+                 SelectionChanged="AccountListbox_OnSelectionChanged">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Account_name}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <DockPanel Grid.Column="4" Grid.Row="3" Height="30" LastChildFill="False" HorizontalAlignment="Center"  >
+            <Button Name="AddAccBtn" Margin="4 0" Width="60" Click="AddAccBtn_OnClick">Add</Button>
+            <Button Click="RemoveAccBtn_OnClick" Name="RemoveAccBtn" Width="60">Remove</Button>
+            
+        </DockPanel>
+        <TabControl Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Grid.RowSpan="3" Margin="5 0">
+            <TabItem Header="Account Stats">
+                <Grid Name="MatchGrid">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" HorizontalAlignment="Center">
+                        <Label Height="30px">Ranked games</Label>
+                        <Label Height="30px">Wins :</Label>
+                        <Label Height="30px">Losses :</Label>
+                        <Label Height="30px">Win-rate :</Label>
+                        <Label Height="30px">KDA :</Label>
+                        <Label Height="30px">Most played champion:</Label>
+                        <Label Height="30px">Most played position:</Label>
+                    </StackPanel>
+                    <StackPanel  Grid.Column="1" Name="MatchLabelStackPanel"  >
+                        <Label Height="30px" Content="{Binding Account_name}"></Label>
+                        <Label Height="30px" Content="{Binding Account_wins}"></Label>
+                        <Label Height="30px" Content="{Binding Account_losses}"></Label>
+                        <Label Height="30px" Content="{Binding Path = Win_rate}" ContentStringFormat="{}{0}%"></Label>
+                        <Label Height="30px" Content="{Binding Path=KDA}" ></Label>
+                        <Label Height="30px" Content="{Binding MostPlayedChamp}"></Label>
+                        <Label Height="30px" Content="{Binding MostPlayedPosition}"></Label>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Accounts by queue">
+                <Grid Name="AccQueueGrid">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.2*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="25px"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <WrapPanel Grid.Row="0" Margin="5 5">
+                        <ComboBox Name="ABQRegionBox"></ComboBox>
+                        <ComboBox Name="ABQQueueBox"></ComboBox>
+                        <ComboBox Name="ABQTierBox"></ComboBox>
+                        <ComboBox Name="ABQDivisionBox"></ComboBox>
+                        <Grid Background="White" HorizontalAlignment="Right" VerticalAlignment="Center">
+                            <TextBlock Name="ABQPageHint" Margin="4,0" Width="40px"  Text="Page" Foreground="Gray" IsHitTestVisible="False" />
+                        <TextBox VerticalAlignment="Center" Name="ABQPageBox"  TextChanged="ABQPageBox_OnTextChanged" PreviewTextInput="ABQPageBox_OnPreviewTextInput" Background="Transparent"></TextBox>
+                        </Grid>
+                        <Button Name="ABQGoBtn" Click="ABQGoBtn_OnClick">Search</Button>
+                    </WrapPanel>
+                    <ListBox Grid.Row="1" Name="ABQQueueAccountsListBox"  SelectionMode="Single" 
+                             SelectionChanged="AccountListbox_OnSelectionChanged">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock>
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="Name: {0} Wins: {1} Losses: {2} Points: {3}">
+                                            <Binding Path="SummonerName"/>
+                                            <Binding Path="Wins"/>
+                                            <Binding Path="Losses"/>
+                                            <Binding Path="LeaguePoints"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <Button Grid.Row="2" Name="ABQAddBtn" Margin="5,2" Click="ABQAddBtn_OnClick">Add account to list</Button>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Match history">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="30px"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <ListView Grid.Row="0" Name="MHListView" GridViewColumnHeader.Click="MHListView_OnClick"  >
+                        <ListView.View >
+                            <GridView >
+                                <GridViewColumn DisplayMemberBinding="{Binding Path=MatchChampionName}" Header="Champion name" />
+                                <GridViewColumn DisplayMemberBinding="{Binding Path=GameCreated}" Header="Date played"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Path=GameLenght}" Header="Duration"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Path=MatchGoldEarned}" Header="Gold earned"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Path=MatchDamageDealt}" Header="Damage dealt"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Path=MatchKills}" Header="Kills"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Path=MatchAssists}" Header="Assists"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Path=MatchDeaths}" Header="Deaths"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Path=MatchKDA}" Header="KDA"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <Button Grid.Row="1" Height="30px" Click="DetailsButtonBaseOnClick">Details</Button>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+    
+</Window>
